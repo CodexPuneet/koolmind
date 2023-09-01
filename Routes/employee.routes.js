@@ -11,9 +11,6 @@ employeeRouter.delete('/employees/:id',deleteEmployee)
 employeeRouter.get('/employees/:id',singleEmployee)
 employeeRouter.put('/employees/increase-salary/:id',incSalary)
 
-
-
-
 module.exports= {
     employeeRouter
 }
