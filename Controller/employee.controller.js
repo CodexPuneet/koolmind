@@ -91,8 +91,39 @@ const deleteEmployee=async (req, res) => {
     }
   };
 
+
+
+  // Post employee details by employee ID
+  const employeeDetails = async (req, res) => {
+  try {
+    const employeeId = req.params.employeeId;
+    const employee = await Employee.findById(employeeId);
+
+    if (!employee) {
+      return res.status(404).json({ error: 'Employee not found' });
+    }
+
+    const employeeDetailsData = {
+      country: req.body.country,
+      state: req.body.state,
+      city: req.body.city,
+      pincode: req.body.pincode,
+      employeeId: employee._id, // Set the employeeId to the corresponding employee's ID
+    };
+
+    // Create employee_details
+    const employeeDetails = new EmployeeDetails(employeeDetailsData);
+    await employeeDetails.save();
+
+    res.status(201).json(employeeDetails);
+  } catch (error) {
+    res.status(500).json({ error: 'Unable to post employee details' });
+  }
+};
+
+
   module.exports={
-    incSalary,singleEmployee,deleteEmployee,listEmployees,updateEmployees,employees
+    incSalary,singleEmployee,deleteEmployee,listEmployees,updateEmployees,employees,employeeDetails
   }
   
   
